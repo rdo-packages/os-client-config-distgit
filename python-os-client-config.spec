@@ -6,8 +6,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        1.2.0
-Release:        3%{?dist}
+Version:        1.6.3
+Release:        1%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -190,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.6.3-1
+- Update to 1.6.3 version
+
 * Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.2.0-3
 - Try to follow some new snippets from Python guidelines
 
