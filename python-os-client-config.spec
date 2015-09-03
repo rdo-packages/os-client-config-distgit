@@ -7,7 +7,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.6.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -30,20 +30,20 @@ have to know extra info to use OpenStack
 %package -n python2-%{pypi_name}
 Summary:        OpenStack Client Configuation Library
 %{?python_provide:%python_provide python2-%{pypi_name}}
+# python_provide does not exist in CBS Cloud buildroot
+Provides:       python-%{pypi_name} = %{version}-%{release}
+Obsoletes:      python-%{pypi_name} < 1.2.0-3
+
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-pbr
 BuildRequires:  python-fixtures
 
-BuildArch:      noarch
-
 Requires:       python-setuptools
 Requires:       python-fixtures
 Requires:       python-appdirs
 
-Obsoletes:      python-os-client-config < 1.2.0-3
-
-%description -n python2-os-client-config
+%description -n python2-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
 using an OpenStack cloud in a consistent and comprehensive manner. It
 will find cloud config for as few as 1 cloud and as many as you want to
@@ -55,14 +55,17 @@ have to know extra info to use OpenStack
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
-%package  -n python2-os-client-config-doc
+%package  -n python2-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
+%{?python_provide:%python_provide python2-%{pypi_name}-doc}
+# python_provide does not exist in CBS Cloud buildroot
+Provides:       python-%{pypi_name}-doc = %{version}-%{release}
+Obsoletes:      python-%{pypi_name}-doc < 1.2.0-3
+
 BuildRequires:  python-sphinx
 BuildRequires:  python-oslo-sphinx
 
-Obsoletes:      python-os-client-config-doc < 1.2.0-3
-
-%description -n python2-os-client-config-doc
+%description -n python2-%{pypi_name}-doc
 Documentation for the os-client-config library.
 
 
@@ -92,6 +95,8 @@ have to know extra info to use OpenStack
 
 %package -n    python3-%{pypi_name}-doc
 Summary:       Documentation for OpenStack os-client-config library
+%{?python_provide:%python_provide python3-%{pypi_name}-doc}
+
 BuildRequires: python3-sphinx
 BuildRequires: python3-oslo-sphinx 
 
@@ -167,13 +172,13 @@ pushd python3
 popd
 %endif
 
-%files -n python2-os-client-config
+%files -n python2-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
 %{python2_sitelib}/os_client_config
 %{python2_sitelib}/*.egg-info
 
-%files -n python2-os-client-config-doc
+%files -n python2-%{pypi_name}-doc
 %license LICENSE
 %doc python2/doc/build/html
 
@@ -190,6 +195,11 @@ popd
 %endif
 
 %changelog
+* Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.6.3-2
+- Add explicit Provides: python-os-client-config for CBS Cloud buildroot
+- also add missing python_provide macro for -doc subpackages
+- Use pypi_name macro wherever possible
+
 * Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.6.3-1
 - Update to 1.6.3 version
 
