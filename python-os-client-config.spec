@@ -1,27 +1,19 @@
-%global sname os-client-config
+%{!?_licensedir:%global license %%doc}
+%global pypi_name os-client-config
 
 %if 0%{?fedora}
 %global with_python3 1
 %endif
 
-Name:           python-%{sname}
+Name:           python-%{pypi_name}
 Version:        1.2.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
-URL:            https://github.com/openstack/%{sname}
-Source0:        https://pypi.python.org/packages/source/o/%{sname}/%{sname}-%{version}.tar.gz
-
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-BuildRequires:  python-pbr
-BuildRequires:  python-fixtures
+URL:            https://github.com/openstack/%{pypi_name}
+Source0:        https://pypi.python.org/packages/source/o/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 
 BuildArch:      noarch
-
-Requires:       python-setuptools
-Requires:       python-fixtures
-Requires:       python-appdirs
 
 %description
 The os-client-config is a library for collecting client configuration for
@@ -35,27 +27,23 @@ have to know extra info to use OpenStack
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
-%package doc
-Summary:    Documentation for OpenStack os-client-config library
-BuildRequires: python-sphinx
-BuildRequires: python-oslo-sphinx
-
-%description doc
-Documentation for the os-client-config library.
-
-%if 0%{?with_python3}
-%package -n python3-%{sname}
+%package -n python2-%{pypi_name}
 Summary:        OpenStack Client Configuation Library
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-pbr
+%{?python_provide:%python_provide python2-%{pypi_name}}
+BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python-pbr
+BuildRequires:  python-fixtures
+
 BuildArch:      noarch
 
-Requires:       python3-setuptools
-Requires:       python3-fixtures
-Requires:       python3-appdirs
+Requires:       python-setuptools
+Requires:       python-fixtures
+Requires:       python-appdirs
 
-%description -n python3-%{sname}
+Obsoletes:      python-os-client-config < 1.2.0-3
+
+%description -n python2-os-client-config
 The os-client-config is a library for collecting client configuration for
 using an OpenStack cloud in a consistent and comprehensive manner. It
 will find cloud config for as few as 1 cloud and as many as you want to
@@ -67,18 +55,53 @@ have to know extra info to use OpenStack
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
-%package -n    python3-%{sname}-doc
+%package  -n python2-os-client-config-doc
+Summary:        Documentation for OpenStack os-client-config library
+BuildRequires:  python-sphinx
+BuildRequires:  python-oslo-sphinx
+
+Obsoletes:      python-os-client-config-doc < 1.2.0-3
+
+%description -n python2-os-client-config-doc
+Documentation for the os-client-config library.
+
+
+%if 0%{?with_python3}
+%package -n python3-%{pypi_name}
+Summary:        OpenStack Client Configuation Library
+%{?python_provide:%python_provide python3-%{pypi_name}}
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-pbr
+
+Requires:       python3-setuptools
+Requires:       python3-fixtures
+Requires:       python3-appdirs
+
+%description -n python3-%{pypi_name}
+The os-client-config is a library for collecting client configuration for
+using an OpenStack cloud in a consistent and comprehensive manner. It
+will find cloud config for as few as 1 cloud and as many as you want to
+put in a config file. It will read environment variables and config files,
+and it also contains some vendor specific default values so that you don't
+have to know extra info to use OpenStack
+
+* If you have a config file, you will get the clouds listed in it
+* If you have environment variables, you will get a cloud named `envvars`
+* If you have neither, you will get a cloud named `defaults` with base defaults
+
+%package -n    python3-%{pypi_name}-doc
 Summary:       Documentation for OpenStack os-client-config library
 BuildRequires: python3-sphinx
 BuildRequires: python3-oslo-sphinx 
 
-%description -n python3-%{sname}-doc
+%description -n python3-%{pypi_name}-doc
 Documentation for the os-client-config library.
 %endif
 
 %prep
 %setup -qc
-mv %{sname}-%{version} python2
+mv %{pypi_name}-%{version} python2
 
 pushd python2
 rm -rf *.egg-info
@@ -144,27 +167,32 @@ pushd python3
 popd
 %endif
 
-%files
+%files -n python2-os-client-config
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
 %{python2_sitelib}/os_client_config
 %{python2_sitelib}/*.egg-info
 
-%files doc
+%files -n python2-os-client-config-doc
+%license LICENSE
 %doc python2/doc/build/html
 
 %if 0%{?with_python3}
-%files -n python3-%{sname}
+%files -n python3-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
 %{python3_sitelib}/os_client_config
 %{python3_sitelib}/*.egg-info
 
-%files -n python3-%{sname}-doc
+%files -n python3-%{pypi_name}-doc
+%license LICENSE
 %doc python3/doc/build/html
 %endif
 
 %changelog
+* Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.2.0-3
+- Try to follow some new snippets from Python guidelines
+
 * Sat Aug 01 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.2.0-2
 - enable python3 version
 - Add missing Requires: python3-appdirs
