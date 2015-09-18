@@ -6,8 +6,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        1.6.3
-Release:        2%{?dist}
+Version:        1.7.1
+Release:        1%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -195,6 +195,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 18 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.7.1-1
+- Update to 1.7.1 version
+
 * Thu Sep 03 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.6.3-2
 - Add explicit Provides: python-os-client-config for CBS Cloud buildroot
 - also add missing python_provide macro for -doc subpackages
