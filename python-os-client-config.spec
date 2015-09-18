@@ -31,6 +31,8 @@ have to know extra info to use OpenStack
 Summary:        OpenStack Client Configuation Library
 %{?python_provide:%python_provide python2-%{pypi_name}}
 Obsoletes: python-%{pypi_name} < 1.7.3
+# compat for previous Delorean Trunk package
+Provides:       os-client-config
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
