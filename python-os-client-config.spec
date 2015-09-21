@@ -30,6 +30,7 @@ have to know extra info to use OpenStack
 %package -n python2-%{pypi_name}
 Summary:        OpenStack Client Configuation Library
 %{?python_provide:%python_provide python2-%{pypi_name}}
+Obsoletes: python-%{pypi_name} < 1.7.3
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -95,6 +96,7 @@ have to know extra info to use OpenStack
 %package -n    python3-%{pypi_name}-doc
 Summary:       Documentation for OpenStack os-client-config library
 %{?python_provide:%python_provide python3-%{pypi_name}-doc}
+Obsoletes: python-%{pypi_name}-doc < 1.7.3
 
 BuildRequires: python3-sphinx
 BuildRequires: python3-oslo-sphinx 
