@@ -6,7 +6,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        1.7.3
+Version:        1.7.4
 Release:        1%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
@@ -197,6 +197,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 21 2015 Alan Pevec <alan.pevec@redhat.com> 1.7.4-1
+- Update to upstream 1.7.4
+
 * Mon Sep 21 2015 Alan Pevec <alan.pevec@redhat.com> 1.7.3-1
 - Update to upstream 1.7.3
 
