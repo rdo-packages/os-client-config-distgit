@@ -40,6 +40,7 @@ BuildRequires:  python-pbr
 BuildRequires:  python-fixtures
 BuildRequires:  python-appdirs
 BuildRequires:  python-oslotest >= 1.10.0
+BuildRequires:  PyYAML
 
 Requires:       python-setuptools
 Requires:       python-fixtures
