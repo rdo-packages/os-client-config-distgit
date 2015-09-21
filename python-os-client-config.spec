@@ -38,6 +38,7 @@ BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-pbr
 BuildRequires:  python-fixtures
+BuildRequires:  python-appdirs
 BuildRequires:  python-oslotest >= 1.10.0
 
 Requires:       python-setuptools
