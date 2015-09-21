@@ -112,7 +112,6 @@ Documentation for the os-client-config library.
 mv %{pypi_name}-%{version} python2
 
 pushd python2
-rm -rf *.egg-info
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
