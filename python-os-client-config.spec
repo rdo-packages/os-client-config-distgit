@@ -30,9 +30,6 @@ have to know extra info to use OpenStack
 %package -n python2-%{pypi_name}
 Summary:        OpenStack Client Configuation Library
 %{?python_provide:%python_provide python2-%{pypi_name}}
-# python_provide does not exist in CBS Cloud buildroot
-Provides:       python-%{pypi_name} = %{version}-%{release}
-Obsoletes:      python-%{pypi_name} < 1.2.0-3
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -63,9 +60,6 @@ have to know extra info to use OpenStack
 %package  -n python2-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
 %{?python_provide:%python_provide python2-%{pypi_name}-doc}
-# python_provide does not exist in CBS Cloud buildroot
-Provides:       python-%{pypi_name}-doc = %{version}-%{release}
-Obsoletes:      python-%{pypi_name}-doc < 1.2.0-3
 
 BuildRequires:  python-sphinx
 BuildRequires:  python-oslo-sphinx
