@@ -6,7 +6,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        1.7.1
+Version:        1.7.3
 Release:        1%{?dist}
 Summary:        OpenStack Client Configuation Library
 License:        ASL 2.0
@@ -38,10 +38,15 @@ BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-pbr
 BuildRequires:  python-fixtures
+BuildRequires:  python-oslotest >= 1.10.0
 
 Requires:       python-setuptools
 Requires:       python-fixtures
 Requires:       python-appdirs
+# TODO soft-deps
+#Requires:       python-keystoneauth1
+#Requires:       python-keystoneclient >= 1.6.0
+Requires:       PyYAML
 
 %description -n python2-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
@@ -195,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 21 2015 Alan Pevec <alan.pevec@redhat.com> 1.7.3-1
+- Update to upstream 1.7.3
+
 * Fri Sep 18 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.7.1-1
 - Update to 1.7.1 version
 
