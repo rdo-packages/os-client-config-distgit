@@ -8,7 +8,7 @@
 Name:           python-%{pypi_name}
 Version:        1.7.4
 Release:        1%{?dist}
-Summary:        OpenStack Client Configuation Library
+Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
 Source0:        https://pypi.python.org/packages/source/o/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
@@ -104,7 +104,7 @@ Summary:       Documentation for OpenStack os-client-config library
 Obsoletes: python-%{pypi_name}-doc < 1.7.3
 
 BuildRequires: python3-sphinx
-BuildRequires: python3-oslo-sphinx 
+BuildRequires: python3-oslo-sphinx
 
 %description -n python3-%{pypi_name}-doc
 Documentation for the os-client-config library.
