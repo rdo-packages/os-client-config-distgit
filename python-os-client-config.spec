@@ -7,7 +7,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.7.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
+
 * Mon Sep 21 2015 Alan Pevec <alan.pevec@redhat.com> 1.7.4-1
 - Update to upstream 1.7.4
 
