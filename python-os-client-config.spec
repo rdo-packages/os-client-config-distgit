@@ -81,6 +81,9 @@ Summary:        OpenStack Client Configuation Library
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pbr
+BuildRequires:  python3-appdirs
+BuildRequires:  python3-PyYAML
+BuildRequires:  python3-fixtures
 
 Requires:       python3-setuptools
 Requires:       python3-fixtures
