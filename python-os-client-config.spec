@@ -7,7 +7,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.7.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -84,6 +84,8 @@ BuildRequires:  python3-pbr
 BuildRequires:  python3-appdirs
 BuildRequires:  python3-PyYAML
 BuildRequires:  python3-fixtures
+BuildRequires:  python3-oslotest >= 1.10.0
+BuildRequires:  python3-keystoneclient >= 1.6.0
 
 Requires:       python3-setuptools
 Requires:       python3-fixtures
@@ -203,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 19 2015 Parag Nemade <pnemade AT redhat DOT com> - 1.7.4-3
+- Added few missing BuildRequires: for python3 subpackage
+
 * Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 
