@@ -5,9 +5,11 @@
 %global with_python3 1
 %endif
 
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+
 Name:           python-%{pypi_name}
-Version:        1.7.4
-Release:        4%{?dist}
+Version:        1.16.0
+Release:        1%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -28,28 +30,34 @@ have to know extra info to use OpenStack
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
 %package -n python2-%{pypi_name}
-Summary:        OpenStack Client Configuation Library
+Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{pypi_name}}
 Obsoletes: python-%{pypi_name} < 1.7.3
 # compat for previous Delorean Trunk package
 Provides:       os-client-config
 
+BuildRequires:  git
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-pbr
-BuildRequires:  python-fixtures
-BuildRequires:  python-appdirs
-BuildRequires:  python-oslotest >= 1.10.0
-BuildRequires:  python-keystoneclient >= 1.6.0
-BuildRequires:  PyYAML
 
-Requires:       python-setuptools
-Requires:       python-fixtures
-Requires:       python-appdirs
-# TODO soft-deps
-#Requires:       python-keystoneauth1
-#Requires:       python-keystoneclient >= 1.6.0
-Requires:       PyYAML
+# Testing requirements
+BuildRequires:  python-fixtures
+BuildRequires:  python-glanceclient >= 0.18.0
+BuildRequires:  python-jsonschema >= 2.0.0
+BuildRequires:  python-keystoneclient >= 1.1.0
+BuildRequires:  python-oslotest >= 1.10.0
+
+# Requirements
+BuildRequires:  python-appdirs >= 1.3.0
+BuildRequires:  python-keystoneauth1 >= 2.1.0
+BuildRequires:  python-requestsexceptions >= 1.1.1
+BuildRequires:  PyYAML >= 3.1.0
+
+Requires:       python-appdirs >= 1.3.0
+Requires:       python-keystoneauth1 >= 2.1.0
+Requires:       python-requestsexceptions >= 1.1.1
+Requires:       PyYAML >= 3.1.0
 
 %description -n python2-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
@@ -69,6 +77,7 @@ Summary:        Documentation for OpenStack os-client-config library
 
 BuildRequires:  python-sphinx
 BuildRequires:  python-oslo-sphinx
+BuildRequires:  python-reno
 
 %description -n python2-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -76,20 +85,28 @@ Documentation for the os-client-config library.
 
 %if 0%{?with_python3}
 %package -n python3-%{pypi_name}
-Summary:        OpenStack Client Configuation Library
+Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{pypi_name}}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pbr
-BuildRequires:  python3-appdirs
-BuildRequires:  python3-PyYAML
-BuildRequires:  python3-fixtures
-BuildRequires:  python3-oslotest >= 1.10.0
-BuildRequires:  python3-keystoneclient >= 1.6.0
 
-Requires:       python3-setuptools
-Requires:       python3-fixtures
-Requires:       python3-appdirs
+# Testing requirements
+BuildRequires:  python3-fixtures
+BuildRequires:  python3-jsonschema >= 2.0.0
+BuildRequires:  python3-keystoneclient >= 2.1.0
+BuildRequires:  python3-oslotest >= 1.10.0
+
+# Requirements
+BuildRequires:  python3-appdirs >= 1.3.0
+BuildRequires:  python3-keystoneauth1 >= 2.1.0
+BuildRequires:  python3-requestsexceptions >= 1.1.1
+BuildRequires:  python3-PyYAML >= 3.1.0
+
+Requires:       python3-appdirs >= 1.3.0
+Requires:       python3-keystoneauth1 >= 2.1.0
+Requires:       python3-requestsexceptions >= 1.1.1
+Requires:       python3-PyYAML >= 3.1.0
 
 %description -n python3-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
@@ -116,70 +133,34 @@ Documentation for the os-client-config library.
 %endif
 
 %prep
-%setup -qc
-mv %{pypi_name}-%{version} python2
-
-pushd python2
+%autosetup -n %{pypi_name}-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
-cp -p LICENSE ChangeLog CONTRIBUTING.rst PKG-INFO README.rst ../
-popd
-
-%if 0%{?with_python3}
-cp -a python2 python3
-%endif
-
 %build
-pushd python2
 %py2_build
-popd
 %if 0%{?with_python3}
-pushd python3
 %py3_build
-popd
 %endif
 
 %install
-pushd python2
 %py2_install
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-pushd doc
-sphinx-build -b html -d build/doctrees   source build/html
-# Fix hidden-file-or-dir warnings
-rm -fr build/html/.buildinfo
 
-# Fix this rpmlint warning
-sed -i "s|\r||g" build/html/_static/jquery.js
-popd
-popd
+# generate html doc
+%{__python} setup.py build_sphinx
+rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 
 %if 0%{?with_python3}
-pushd python3
 %py3_install
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-pushd doc
-sphinx-build-3 -b html -d build/doctrees   source build/html
-
-# Fix hidden-file-or-dir warnings
-rm -fr build/html/.buildinfo
-
-# Fix this rpmlint warning
-sed -i "s|\r||g" build/html/_static/jquery.js
-popd
-popd
 %endif
 
 %check
-pushd python2
-%{__python2} setup.py test
-popd
-
+%{__python2} setup.py testr
+# cleanup testrepository
+rm -rf .testrepository
 %if 0%{?with_python3}
-pushd python3
-%{__python3} setup.py test
-popd
+%{__python3} setup.py testr
 %endif
 
 %files -n python2-%{pypi_name}
@@ -190,7 +171,7 @@ popd
 
 %files -n python2-%{pypi_name}-doc
 %license LICENSE
-%doc python2/doc/build/html
+%doc doc/build/html
 
 %if 0%{?with_python3}
 %files -n python3-%{pypi_name}
@@ -201,10 +182,13 @@ popd
 
 %files -n python3-%{pypi_name}-doc
 %license LICENSE
-%doc python3/doc/build/html
+%doc doc/build/html
 %endif
 
 %changelog
+* Tue Mar 08 2016 Paul Belanger <pabelanger@redhat.com> - 1.16.0-1
+- Update to 1.16.0
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
