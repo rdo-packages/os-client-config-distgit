@@ -1,5 +1,5 @@
-# UUID          Group Name
-6ddfecad023c6f4fa3ac8c4d2583c502ea675a73 	Non-Interactive Users
-bf68e26dd37578c3d61777518cfec9bdcdf24ef9       	os-client-config-distgit-core
-38e973b84de202c8323cc8cc03f62e9f2dd0da23        	os-client-config-distgit-ptl
-global:Registered-Users		Registered Users
+# UUID                                  	Group Name
+#
+38e973b84de202c8323cc8cc03f62e9f2dd0da23	openstack/os-client-config-distgit-ptl
+bf68e26dd37578c3d61777518cfec9bdcdf24ef9	os-client-config-distgit-core
+global:Registered-Users                 	Registered Users
