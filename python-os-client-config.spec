@@ -8,8 +8,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
-Version:        XXX
-Release:        XXX
+Version:        1.21.1
+Release:        1%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -186,3 +186,6 @@ rm -rf .testrepository
 %endif
 
 %changelog
+* Sun Sep 11 2016 Haikel Guemar <hguemar@fedoraproject.org> 1.21.1-1
+- Update to 1.21.1
+
