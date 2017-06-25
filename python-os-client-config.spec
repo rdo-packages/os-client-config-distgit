@@ -76,7 +76,7 @@ Summary:        Documentation for OpenStack os-client-config library
 %{?python_provide:%python_provide python2-%{pypi_name}-doc}
 
 BuildRequires:  python-sphinx
-BuildRequires:  python-oslo-sphinx
+BuildRequires:  python-openstackdocstheme
 BuildRequires:  python-reno
 
 %description -n python2-%{pypi_name}-doc
@@ -186,4 +186,3 @@ rm -rf .testrepository
 %endif
 
 %changelog
-
