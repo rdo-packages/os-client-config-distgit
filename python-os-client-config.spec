@@ -50,14 +50,14 @@ BuildRequires:  python-oslotest >= 1.10.0
 
 # Requirements
 BuildRequires:  python-appdirs >= 1.3.0
-BuildRequires:  python-keystoneauth1 >= 2.1.0
-BuildRequires:  python-requestsexceptions >= 1.1.1
-BuildRequires:  PyYAML >= 3.1.0
+BuildRequires:  python-keystoneauth1 >= 3.1.0
+BuildRequires:  python-requestsexceptions >= 1.2.0
+BuildRequires:  PyYAML >= 3.10
 
 Requires:       python-appdirs >= 1.3.0
-Requires:       python-keystoneauth1 >= 2.1.0
-Requires:       python-requestsexceptions >= 1.1.1
-Requires:       PyYAML >= 3.1.0
+Requires:       python-keystoneauth1 >= 3.1.0
+Requires:       python-requestsexceptions >= 1.2.0
+Requires:       PyYAML >= 3.10
 
 %description -n python2-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
@@ -99,14 +99,14 @@ BuildRequires:  python3-oslotest >= 1.10.0
 
 # Requirements
 BuildRequires:  python3-appdirs >= 1.3.0
-BuildRequires:  python3-keystoneauth1 >= 2.1.0
+BuildRequires:  python3-keystoneauth1 >= 3.1.0
 BuildRequires:  python3-requestsexceptions >= 1.1.1
-BuildRequires:  python3-PyYAML >= 3.1.0
+BuildRequires:  python3-PyYAML >= 3.10
 
 Requires:       python3-appdirs >= 1.3.0
-Requires:       python3-keystoneauth1 >= 2.1.0
-Requires:       python3-requestsexceptions >= 1.1.1
-Requires:       python3-PyYAML >= 3.1.0
+Requires:       python3-keystoneauth1 >= 3.1.0
+Requires:       python3-requestsexceptions >= 1.2.0
+Requires:       python3-PyYAML >= 3.10
 
 %description -n python3-%{pypi_name}
 The os-client-config is a library for collecting client configuration for
