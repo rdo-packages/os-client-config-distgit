@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a890539_87b9daeb",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-08-07T14:32:32Z",
+      "side": 1,
+      "message": "PyYAML has been bumped to 3.10",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "91dc7c899406d80e709cd96999e49ea0aa009095",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
