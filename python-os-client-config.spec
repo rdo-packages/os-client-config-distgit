@@ -112,6 +112,7 @@ Obsoletes: python-%{pypi_name}-doc < 1.7.3
 
 BuildRequires: python3-sphinx
 BuildRequires: python3-oslo-sphinx
+BuildRequires: openstack-macros
 
 %description -n python3-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -121,7 +122,7 @@ Documentation for the os-client-config library.
 %autosetup -n %{pypi_name}-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+%py_req_cleanup
 
 %build
 %py2_build
