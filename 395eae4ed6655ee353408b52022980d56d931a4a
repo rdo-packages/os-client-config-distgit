@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa81d914_9f1f6709",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-10-03T13:50:43Z",
+      "side": 1,
+      "message": "Please check the last comment",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 18
+      },
+      "revId": "395eae4ed6655ee353408b52022980d56d931a4a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa81d914_ffff83a8",
         "filename": "python-os-client-config.spec",
         "patchSetId": 1
