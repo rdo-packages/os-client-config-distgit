@@ -7,6 +7,20 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
+%global common_desc \
+The os-client-config is a library for collecting client configuration for \
+using an OpenStack cloud in a consistent and comprehensive manner. It \
+will find cloud config for as few as 1 cloud and as many as you want to \
+put in a config file. It will read environment variables and config files, \
+and it also contains some vendor specific default values so that you don't \
+have to know extra info to use OpenStack \
+ \
+* If you have a config file, you will get the clouds listed in it \
+* If you have environment variables, you will get a cloud named `envvars` \
+* If you have neither, you will get a cloud named `defaults` with base defaults
+
+%global common_desc_doc Documentation for the os-client-config library.
+
 Name:           python-%{pypi_name}
 Version:        XXX
 Release:        XXX
@@ -18,16 +32,7 @@ Source0:        https://pypi.io/packages/source/o/%{pypi_name}/%{pypi_name}-%{ve
 BuildArch:      noarch
 
 %description
-The os-client-config is a library for collecting client configuration for
-using an OpenStack cloud in a consistent and comprehensive manner. It
-will find cloud config for as few as 1 cloud and as many as you want to
-put in a config file. It will read environment variables and config files,
-and it also contains some vendor specific default values so that you don't
-have to know extra info to use OpenStack
-
-* If you have a config file, you will get the clouds listed in it
-* If you have environment variables, you will get a cloud named `envvars`
-* If you have neither, you will get a cloud named `defaults` with base defaults
+%{common_desc}
 
 %package -n python2-%{pypi_name}
 Summary:        %{summary}
@@ -60,16 +65,7 @@ Requires:       python-requestsexceptions >= 1.2.0
 Requires:       PyYAML >= 3.10
 
 %description -n python2-%{pypi_name}
-The os-client-config is a library for collecting client configuration for
-using an OpenStack cloud in a consistent and comprehensive manner. It
-will find cloud config for as few as 1 cloud and as many as you want to
-put in a config file. It will read environment variables and config files,
-and it also contains some vendor specific default values so that you don't
-have to know extra info to use OpenStack
-
-* If you have a config file, you will get the clouds listed in it
-* If you have environment variables, you will get a cloud named `envvars`
-* If you have neither, you will get a cloud named `defaults` with base defaults
+%{common_desc}
 
 %package  -n python2-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
@@ -80,7 +76,7 @@ BuildRequires:  python-openstackdocstheme
 BuildRequires:  python-reno
 
 %description -n python2-%{pypi_name}-doc
-Documentation for the os-client-config library.
+%{common_desc_doc}
 
 
 %if 0%{?with_python3}
@@ -109,16 +105,7 @@ Requires:       python3-requestsexceptions >= 1.2.0
 Requires:       python3-PyYAML >= 3.10
 
 %description -n python3-%{pypi_name}
-The os-client-config is a library for collecting client configuration for
-using an OpenStack cloud in a consistent and comprehensive manner. It
-will find cloud config for as few as 1 cloud and as many as you want to
-put in a config file. It will read environment variables and config files,
-and it also contains some vendor specific default values so that you don't
-have to know extra info to use OpenStack
-
-* If you have a config file, you will get the clouds listed in it
-* If you have environment variables, you will get a cloud named `envvars`
-* If you have neither, you will get a cloud named `defaults` with base defaults
+%{common_desc}
 
 %package -n    python3-%{pypi_name}-doc
 Summary:       Documentation for OpenStack os-client-config library
@@ -129,7 +116,7 @@ BuildRequires: python3-sphinx
 BuildRequires: python3-oslo-sphinx
 
 %description -n python3-%{pypi_name}-doc
-Documentation for the os-client-config library.
+%{common_desc_doc}
 %endif
 
 %prep
