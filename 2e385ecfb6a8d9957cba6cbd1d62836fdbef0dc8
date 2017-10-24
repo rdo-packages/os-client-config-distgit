@@ -1,0 +1,9 @@
+Code-Review+2: hguemar <hguemar@fedoraproject.org>
+Code-Review+2: chkumar246 <chkumar@redhat.com>
+Workflow+1: chkumar246 <chkumar@redhat.com>
+Verified+2: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-by: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-at: Tue, 24 Oct 2017 14:13:15 +0000
+Reviewed-on: https://review.rdoproject.org/r/9889
+Project: openstack/os-client-config-distgit
+Branch: refs/heads/rpm-master
