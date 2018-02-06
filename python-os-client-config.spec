@@ -46,6 +46,7 @@ BuildRequires:  python-pbr
 
 # Testing requirements
 BuildRequires:  python-fixtures
+BuildRequires:  python-os-testr
 BuildRequires:  python-glanceclient >= 0.18.0
 BuildRequires:  python-jsonschema >= 2.0.0
 BuildRequires:  python-keystoneclient >= 1.1.0
@@ -87,6 +88,7 @@ BuildRequires:  python3-pbr
 
 # Testing requirements
 BuildRequires:  python3-fixtures
+BuildRequires:  python3-os-testr
 BuildRequires:  python3-jsonschema >= 2.0.0
 BuildRequires:  python3-keystoneclient >= 2.1.0
 BuildRequires:  python3-oslotest >= 1.10.0
@@ -141,12 +143,15 @@ rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 %endif
 
 %check
-%{__python2} setup.py testr
-# cleanup testrepository
-rm -rf .testrepository
+export OS_TEST_PATH='./os_client_config/tests'
+export PATH=$PATH:$RPM_BUILD_ROOT/usr/bin
+export PYTHONPATH=$PWD
+stestr --test-path $OS_TEST_PATH run
 %if 0%{?with_python3}
-%{__python3} setup.py testr
+rm -rf .stestr
+stestr-3 --test-path $OS_TEST_PATH run
 %endif
+
 
 %files -n python2-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
@@ -171,3 +176,4 @@ rm -rf .testrepository
 %endif
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/os-client-config/commit/?id=2c549183f325e12e3185b6653dd8fc96fab77984
