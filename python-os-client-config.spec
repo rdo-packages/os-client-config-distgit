@@ -41,27 +41,36 @@ Provides:       os-client-config
 
 BuildRequires:  git
 BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-BuildRequires:  python-pbr
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-pbr
 
 # Testing requirements
-BuildRequires:  python-fixtures
-BuildRequires:  python-os-testr
-BuildRequires:  python-glanceclient >= 0.18.0
-BuildRequires:  python-jsonschema >= 2.0.0
-BuildRequires:  python-keystoneclient >= 1.1.0
-BuildRequires:  python-oslotest >= 1.10.0
+BuildRequires:  python2-fixtures
+BuildRequires:  python2-os-testr
+BuildRequires:  python2-glanceclient >= 0.18.0
+BuildRequires:  python2-keystoneclient >= 1.1.0
+BuildRequires:  python2-oslotest >= 1.10.0
 
 # Requirements
-BuildRequires:  python-appdirs >= 1.3.0
-BuildRequires:  python-keystoneauth1 >= 3.1.0
-BuildRequires:  python-requestsexceptions >= 1.2.0
+BuildRequires:  python2-appdirs >= 1.3.0
+BuildRequires:  python2-keystoneauth1 >= 3.3.0
+BuildRequires:  python2-requestsexceptions >= 1.2.0
+%if 0%{?fedora} > 0
+BuildRequires:  python2-jsonschema >= 2.6.0
+BuildRequires:  python2-pyyaml >= 3.10
+%else
+BuildRequires:  python-jsonschema >= 2.6.0
 BuildRequires:  PyYAML >= 3.10
+%endif
 
-Requires:       python-appdirs >= 1.3.0
-Requires:       python-keystoneauth1 >= 3.1.0
-Requires:       python-requestsexceptions >= 1.2.0
+Requires:       python2-appdirs >= 1.3.0
+Requires:       python2-keystoneauth1 >= 3.3.0
+Requires:       python2-requestsexceptions >= 1.2.0
+%if 0%{?fedora} > 0
+Requires:       python2-pyyaml >= 3.10
+%else
 Requires:       PyYAML >= 3.10
+%endif
 
 %description -n python2-%{pypi_name}
 %{common_desc}
@@ -70,9 +79,9 @@ Requires:       PyYAML >= 3.10
 Summary:        Documentation for OpenStack os-client-config library
 %{?python_provide:%python_provide python2-%{pypi_name}-doc}
 
-BuildRequires:  python-sphinx
-BuildRequires:  python-openstackdocstheme
-BuildRequires:  python-reno
+BuildRequires:  python2-sphinx
+BuildRequires:  python2-openstackdocstheme
+BuildRequires:  python2-reno
 
 %description -n python2-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -90,18 +99,18 @@ BuildRequires:  python3-pbr
 BuildRequires:  python3-fixtures
 BuildRequires:  python3-os-testr
 BuildRequires:  python3-glanceclient
-BuildRequires:  python3-jsonschema >= 2.0.0
+BuildRequires:  python3-jsonschema >= 2.6.0
 BuildRequires:  python3-keystoneclient >= 2.1.0
 BuildRequires:  python3-oslotest >= 1.10.0
 
 # Requirements
 BuildRequires:  python3-appdirs >= 1.3.0
-BuildRequires:  python3-keystoneauth1 >= 3.1.0
+BuildRequires:  python3-keystoneauth1 >= 3.3.0
 BuildRequires:  python3-requestsexceptions >= 1.2.0
 BuildRequires:  python3-PyYAML >= 3.10
 
 Requires:       python3-appdirs >= 1.3.0
-Requires:       python3-keystoneauth1 >= 3.1.0
+Requires:       python3-keystoneauth1 >= 3.3.0
 Requires:       python3-requestsexceptions >= 1.2.0
 Requires:       python3-PyYAML >= 3.10
 
@@ -177,4 +186,3 @@ stestr-3 --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
-# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/os-client-config/commit/?id=2c549183f325e12e3185b6653dd8fc96fab77984
