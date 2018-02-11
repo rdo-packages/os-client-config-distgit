@@ -20,8 +20,8 @@ have to know extra info to use OpenStack \
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
 Name:           python-%{pypi_name}
-Version:        XXX
-Release:        XXX
+Version:        1.29.0
+Release:        1%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -186,3 +186,6 @@ stestr-3 --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
+* Sun Feb 11 2018 RDO <dev@lists.rdoproject.org> 1.29.0-1
+- Update to 1.29.0
+
