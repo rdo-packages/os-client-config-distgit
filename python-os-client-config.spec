@@ -48,29 +48,16 @@ BuildRequires:  python2-pbr
 BuildRequires:  python2-fixtures
 BuildRequires:  python2-os-testr
 BuildRequires:  python2-glanceclient >= 0.18.0
-BuildRequires:  python2-keystoneclient >= 1.1.0
+BuildRequires:  python2-openstacksdk
 BuildRequires:  python2-oslotest >= 1.10.0
 
 # Requirements
-BuildRequires:  python2-appdirs >= 1.3.0
-BuildRequires:  python2-keystoneauth1 >= 3.3.0
-BuildRequires:  python2-requestsexceptions >= 1.2.0
 %if 0%{?fedora} > 0
 BuildRequires:  python2-jsonschema >= 2.6.0
-BuildRequires:  python2-pyyaml >= 3.10
 %else
 BuildRequires:  python-jsonschema >= 2.6.0
-BuildRequires:  PyYAML >= 3.10
 %endif
-
-Requires:       python2-appdirs >= 1.3.0
-Requires:       python2-keystoneauth1 >= 3.3.0
-Requires:       python2-requestsexceptions >= 1.2.0
-%if 0%{?fedora} > 0
-Requires:       python2-pyyaml >= 3.10
-%else
-Requires:       PyYAML >= 3.10
-%endif
+Requires:       python2-openstacksdk >= 0.13.0
 
 %description -n python2-%{pypi_name}
 %{common_desc}
@@ -99,20 +86,11 @@ BuildRequires:  python3-pbr
 BuildRequires:  python3-fixtures
 BuildRequires:  python3-os-testr
 BuildRequires:  python3-glanceclient
+BuildRequires:  python3-openstacksdk
 BuildRequires:  python3-jsonschema >= 2.6.0
-BuildRequires:  python3-keystoneclient >= 2.1.0
 BuildRequires:  python3-oslotest >= 1.10.0
 
-# Requirements
-BuildRequires:  python3-appdirs >= 1.3.0
-BuildRequires:  python3-keystoneauth1 >= 3.3.0
-BuildRequires:  python3-requestsexceptions >= 1.2.0
-BuildRequires:  python3-PyYAML >= 3.10
-
-Requires:       python3-appdirs >= 1.3.0
-Requires:       python3-keystoneauth1 >= 3.3.0
-Requires:       python3-requestsexceptions >= 1.2.0
-Requires:       python3-PyYAML >= 3.10
+Requires:       python3-openstacksdk >= 0.13.0
 
 %description -n python3-%{pypi_name}
 %{common_desc}
