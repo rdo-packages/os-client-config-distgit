@@ -11,6 +11,7 @@
 # End of macros for py2/py3 compatibility
 %{!?_licensedir:%global license %%doc}
 %global pypi_name os-client-config
+%global with_doc 1
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
@@ -73,6 +74,7 @@ BuildRequires:  python%{pyver}-jsonschema >= 2.6.0
 %description -n python%{pyver}-%{pypi_name}
 %{common_desc}
 
+%if 0%{?with_doc}
 %package  -n python%{pyver}-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
 %{?python_provide:%python_provide python%{pyver}-%{pypi_name}-doc}
@@ -83,6 +85,7 @@ BuildRequires:  python%{pyver}-reno
 
 %description -n python%{pyver}-%{pypi_name}-doc
 Documentation for the os-client-config library.
+%endif
 
 %prep
 %autosetup -n %{pypi_name}-%{upstream_version} -S git
@@ -93,9 +96,11 @@ rm -f test-requirements.txt requirements.txt
 %build
 %{pyver_build}
 
+%if 0%{?with_doc}
 # generate html doc
 %{pyver_bin} setup.py build_sphinx -b html
 rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
+%endif
 
 %install
 %{pyver_install}
@@ -114,8 +119,10 @@ stestr-%{pyver} --test-path $OS_TEST_PATH run
 %{pyver_sitelib}/os_client_config
 %{pyver_sitelib}/*.egg-info
 
+%if 0%{?with_doc}
 %files -n python%{pyver}-%{pypi_name}-doc
 %license LICENSE
 %doc doc/build/html
+%endif
 
 %changelog
