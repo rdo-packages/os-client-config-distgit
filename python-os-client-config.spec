@@ -8,7 +8,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
-Version:        1.28.0
+Version:        1.28.1
 Release:        1%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
@@ -186,6 +186,9 @@ rm -rf .testrepository
 %endif
 
 %changelog
+* Mon Apr 29 2019 RDO <dev@lists.rdoproject.org> 1.28.1-1
+- Update to 1.28.1
+
 * Fri Aug 11 2017 Alfredo Moralejo <amoralej@redhat.com> 1.28.0-1
 - Update to 1.28.0
 
