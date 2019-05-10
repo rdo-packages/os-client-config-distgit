@@ -22,7 +22,7 @@ have to know extra info to use OpenStack \
 
 Name:           python-%{pypi_name}
 Version:        1.32.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -47,7 +47,7 @@ BuildRequires:  python2-setuptools
 BuildRequires:  python2-pbr
 # Testing requirements
 BuildRequires:  python2-fixtures
-BuildRequires:  python2-os-testr
+BuildRequires:  python2-stestr
 %if 0%{?with_python3} == 0
 BuildRequires:  python2-glanceclient >= 0.18.0
 %endif
@@ -77,7 +77,7 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-pbr
 # Testing requirements
 BuildRequires:  python3-fixtures
-BuildRequires:  python3-os-testr
+BuildRequires:  python3-stestr
 BuildRequires:  python3-jsonschema >= 2.6.0
 BuildRequires:  python3-glanceclient >= 0.18.0
 BuildRequires:  python3-openstacksdk
@@ -176,6 +176,9 @@ stestr --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
+* Fri May 10 2019 Alfredo Moralejo <amoralej@redhat.com> 1.32.0-2
+- Added stestr as BR
+
 * Fri Mar 08 2019 RDO <dev@lists.rdoproject.org> 1.32.0-1
 - Update to 1.32.0
 
