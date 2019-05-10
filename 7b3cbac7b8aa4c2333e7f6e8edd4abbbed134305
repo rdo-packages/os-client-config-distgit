@@ -1,0 +1,8 @@
+Code-Review+2: Javier Peña <jpena@redhat.com>
+Workflow+1: Javier Peña <jpena@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Fri, 10 May 2019 17:16:55 +0000
+Reviewed-on: https://review.rdoproject.org/r/20634
+Project: openstack/os-client-config-distgit
+Branch: refs/heads/stein-rdo
