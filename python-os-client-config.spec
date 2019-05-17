@@ -150,9 +150,9 @@ export PYTHONPATH=$PWD
 
 %if 0%{?with_python3}
 rm -rf .stestr
-stestr-3 --test-path $OS_TEST_PATH run
+PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
 %else
-stestr --test-path $OS_TEST_PATH run
+PYTHON=python2 stestr --test-path $OS_TEST_PATH run
 %endif
 
 %files -n python2-%{pypi_name}
