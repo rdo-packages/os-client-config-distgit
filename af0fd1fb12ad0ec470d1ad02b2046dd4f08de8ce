@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0739487c_10dbc4e5",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2019-10-02T09:30:10Z",
+      "side": 1,
+      "message": "You can remove this conditional, it\u0027s not needed when building single pythonX package.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "af0fd1fb12ad0ec470d1ad02b2046dd4f08de8ce",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
