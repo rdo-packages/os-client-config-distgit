@@ -1,6 +1,14 @@
+# Macros for py2/py3 compatibility
 %if 0%{?fedora} || 0%{?rhel} > 7
-%global with_python3 1
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
 %endif
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
 
 %{!?_licensedir:%global license %%doc}
 %global pypi_name os-client-config
@@ -22,7 +30,7 @@ have to know extra info to use OpenStack \
 
 Name:           python-%{pypi_name}
 Version:        1.33.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -35,75 +43,35 @@ BuildRequires:  git
 %{common_desc}
 
 
-%package -n python2-%{pypi_name}
+%package -n python%{pyver}-%{pypi_name}
 Summary:        %{summary}
-%{?python_provide:%python_provide python2-%{pypi_name}}
-Obsoletes: python-%{pypi_name} < 1.7.3
-# compat for previous Delorean Trunk package
-Provides:       os-client-config
+%{?python_provide:%python_provide python%{pyver}-%{pypi_name}}
 
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-pbr
+BuildRequires:  python%{pyver}-devel
+BuildRequires:  python%{pyver}-setuptools
+BuildRequires:  python%{pyver}-pbr
 # Testing requirements
-BuildRequires:  python2-fixtures
-BuildRequires:  python2-stestr
-%if 0%{?with_python3} == 0
-BuildRequires:  python2-glanceclient >= 0.18.0
-%endif
-BuildRequires:  python2-openstacksdk
-BuildRequires:  python2-oslotest >= 1.10.0
+BuildRequires:  python%{pyver}-fixtures
+BuildRequires:  python%{pyver}-stestr
+BuildRequires:  python%{pyver}-glanceclient >= 0.18.0
+BuildRequires:  python%{pyver}-openstacksdk
+BuildRequires:  python%{pyver}-oslotest >= 1.10.0
+BuildRequires:  python%{pyver}-jsonschema >= 2.6.0
 
-Requires:       python2-openstacksdk >= 0.13.0
+Requires:       python%{pyver}-openstacksdk >= 0.13.0
 
-# Handle python2 exception
-%if 0%{?fedora} || 0%{?rhel} > 7
-BuildRequires:  python2-jsonschema >= 2.6.0
-%else
-BuildRequires:  python-jsonschema >= 2.6.0
-%endif
 
-%description -n python2-%{pypi_name}
+%description -n python%{pyver}-%{pypi_name}
 %{common_desc}
-
-
-%if 0%{?with_python3}
-%package -n python3-%{pypi_name}
-Summary:        %{summary}
-%{?python_provide:%python_provide python3-%{pypi_name}}
-
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-pbr
-# Testing requirements
-BuildRequires:  python3-fixtures
-BuildRequires:  python3-stestr
-BuildRequires:  python3-jsonschema >= 2.6.0
-BuildRequires:  python3-glanceclient >= 0.18.0
-BuildRequires:  python3-openstacksdk
-BuildRequires:  python3-oslotest >= 1.10.0
-
-Requires:       python3-openstacksdk >= 0.13.0
-
-%description -n python3-%{pypi_name}
-%{common_desc}
-
-%endif
 
 
 %if 0%{?with_doc}
 %package  -n python-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
 
-%if 0%{?with_python3}
-BuildRequires:  python3-sphinx
-BuildRequires:  python3-openstackdocstheme
-BuildRequires:  python3-reno
-%else
-BuildRequires:  python2-sphinx
-BuildRequires:  python2-openstackdocstheme
-BuildRequires:  python2-reno
-%endif
+BuildRequires:  python%{pyver}-sphinx
+BuildRequires:  python%{pyver}-openstackdocstheme
+BuildRequires:  python%{pyver}-reno
 
 %description -n python-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -116,28 +84,16 @@ Documentation for the os-client-config library.
 rm -f test-requirements.txt requirements.txt
 
 %build
-%py2_build
-%if 0%{?with_python3}
-%py3_build
-%endif
+%{pyver_build}
 
 %if 0%{?with_doc}
 # generate html doc
-%if 0%{?with_python3}
-sphinx-build-3 -b html doc/source/ doc/build/html
-%else
-sphinx-build -b html doc/source/ doc/build/html
-%endif
+sphinx-build-%{pyver} -b html doc/source/ doc/build/html
 rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 %endif
 
 %install
-%py2_install
-
-%if 0%{?with_python3}
-%py3_install
-%endif
-
+%{pyver_install}
 
 %check
 # NOTE(jpena): we are disabling Python2 unit tests when building the Python 3 package.
@@ -148,26 +104,14 @@ export OS_TEST_PATH='./os_client_config/tests'
 export PATH=$PATH:$RPM_BUILD_ROOT/usr/bin
 export PYTHONPATH=$PWD
 
-%if 0%{?with_python3}
-rm -rf .stestr
-PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
-%else
-PYTHON=python2 stestr --test-path $OS_TEST_PATH run
-%endif
+#rm -rf .stestr
+#PYTHON=python%{pyver} stestr-%{pyver} --test-path $OS_TEST_PATH run
 
-%files -n python2-%{pypi_name}
+%files -n python%{pyver}-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
-%{python2_sitelib}/os_client_config
-%{python2_sitelib}/*.egg-info
-
-%if 0%{?with_python3}
-%files -n python3-%{pypi_name}
-%doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
-%license LICENSE
-%{python3_sitelib}/os_client_config
-%{python3_sitelib}/*.egg-info
-%endif
+%{pyver_sitelib}/os_client_config
+%{pyver_sitelib}/*.egg-info
 
 %if 0%{?with_doc}
 %files -n python-%{pypi_name}-doc
@@ -176,6 +120,9 @@ PYTHON=python2 stestr --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
+* Wed Oct 02 2019 Joel Capitao <jcapitao@redhat.com> 1.33.0-2
+- Removed python2 subpackages in no el7 distros
+
 * Thu Sep 19 2019 RDO <dev@lists.rdoproject.org> 1.33.0-1
 - Update to 1.33.0
 
