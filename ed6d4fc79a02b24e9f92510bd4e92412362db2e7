@@ -22,6 +22,30 @@
       "revId": "ed6d4fc79a02b24e9f92510bd4e92412362db2e7",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b11eee5b_b578f5b1",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2019-10-03T10:00:18Z",
+      "side": 1,
+      "message": "this is cherry-pick, let\u0027s fix in rpm-master and cherry-pick in separated review.",
+      "parentUuid": "02a28aec_3529466e",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "ed6d4fc79a02b24e9f92510bd4e92412362db2e7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
