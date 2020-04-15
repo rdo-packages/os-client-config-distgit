@@ -1,14 +1,3 @@
-# Macros for py2/py3 compatibility
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global pyver %{python3_pkgversion}
-%else
-%global pyver 2
-%endif
-%global pyver_bin python%{pyver}
-%global pyver_sitelib %python%{pyver}_sitelib
-%global pyver_install %py%{pyver}_install
-%global pyver_build %py%{pyver}_build
-# End of macros for py2/py3 compatibility
 
 %{!?_licensedir:%global license %%doc}
 %global pypi_name os-client-config
@@ -43,25 +32,25 @@ BuildRequires:  git
 %{common_desc}
 
 
-%package -n python%{pyver}-%{pypi_name}
+%package -n python3-%{pypi_name}
 Summary:        %{summary}
-%{?python_provide:%python_provide python%{pyver}-%{pypi_name}}
+%{?python_provide:%python_provide python3-%{pypi_name}}
 
-BuildRequires:  python%{pyver}-devel
-BuildRequires:  python%{pyver}-setuptools
-BuildRequires:  python%{pyver}-pbr
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-pbr
 # Testing requirements
-BuildRequires:  python%{pyver}-fixtures
-BuildRequires:  python%{pyver}-stestr
-BuildRequires:  python%{pyver}-glanceclient >= 0.18.0
-BuildRequires:  python%{pyver}-openstacksdk
-BuildRequires:  python%{pyver}-oslotest >= 1.10.0
-BuildRequires:  python%{pyver}-jsonschema >= 2.6.0
+BuildRequires:  python3-fixtures
+BuildRequires:  python3-stestr
+BuildRequires:  python3-glanceclient >= 0.18.0
+BuildRequires:  python3-openstacksdk
+BuildRequires:  python3-oslotest >= 1.10.0
+BuildRequires:  python3-jsonschema >= 2.6.0
 
-Requires:       python%{pyver}-openstacksdk >= 0.13.0
+Requires:       python3-openstacksdk >= 0.13.0
 
 
-%description -n python%{pyver}-%{pypi_name}
+%description -n python3-%{pypi_name}
 %{common_desc}
 
 
@@ -69,9 +58,9 @@ Requires:       python%{pyver}-openstacksdk >= 0.13.0
 %package  -n python-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
 
-BuildRequires:  python%{pyver}-sphinx
-BuildRequires:  python%{pyver}-openstackdocstheme
-BuildRequires:  python%{pyver}-reno
+BuildRequires:  python3-sphinx
+BuildRequires:  python3-openstackdocstheme
+BuildRequires:  python3-reno
 
 %description -n python-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -84,16 +73,16 @@ Documentation for the os-client-config library.
 rm -f test-requirements.txt requirements.txt
 
 %build
-%{pyver_build}
+%{py3_build}
 
 %if 0%{?with_doc}
 # generate html doc
-sphinx-build-%{pyver} -b html doc/source/ doc/build/html
+sphinx-build-3 -b html doc/source/ doc/build/html
 rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 %endif
 
 %install
-%{pyver_install}
+%{py3_install}
 
 %check
 # NOTE(jpena): we are disabling Python2 unit tests when building the Python 3 package.
@@ -105,13 +94,13 @@ export PATH=$PATH:$RPM_BUILD_ROOT/usr/bin
 export PYTHONPATH=$PWD
 
 #rm -rf .stestr
-#PYTHON=python%{pyver} stestr-%{pyver} --test-path $OS_TEST_PATH run
+#PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
 
-%files -n python%{pyver}-%{pypi_name}
+%files -n python3-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
-%{pyver_sitelib}/os_client_config
-%{pyver_sitelib}/*.egg-info
+%{python3_sitelib}/os_client_config
+%{python3_sitelib}/*.egg-info
 
 %if 0%{?with_doc}
 %files -n python-%{pypi_name}-doc
