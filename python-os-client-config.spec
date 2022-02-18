@@ -1,4 +1,5 @@
-
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0xbba3b1e67a7303dd1769d34595bf2e4d09004514
 %{!?_licensedir:%global license %%doc}
 %global pypi_name os-client-config
 %global with_doc 1
@@ -18,15 +19,25 @@ have to know extra info to use OpenStack \
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
 Name:           python-%{pypi_name}
-Version:        XXX
-Release:        XXX
+Version:        2.1.0
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
-Source0:        https://pypi.io/packages/source/o/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source0:        https://tarballs.openstack.org/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 BuildArch:      noarch
 BuildRequires:  git-core
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 
 %description
 %{common_desc}
@@ -67,6 +78,10 @@ Documentation for the os-client-config library.
 %endif
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n %{pypi_name}-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
@@ -109,3 +124,8 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Tue Feb 22 2022 Jose Castro Leon <jose.castro.leon@cern.ch> 2.1.0-2
+- Added gpg signature verification
+
+* Fri Apr 24 2020 RDO <dev@lists.rdoproject.org> 2.1.0-1
+- Update to 2.1.0
