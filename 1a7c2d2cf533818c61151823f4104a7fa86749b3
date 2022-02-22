@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "363bdd9d_0163d351",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-02-22T07:44:45Z",
+      "side": 1,
+      "message": "it seems we missed adding gpg validation in this package, i\u0027ll send the patch to rpm-master and you can cherry-pick later.",
+      "revId": "1a7c2d2cf533818c61151823f4104a7fa86749b3",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
