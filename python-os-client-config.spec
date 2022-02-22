@@ -20,7 +20,7 @@ have to know extra info to use OpenStack \
 
 Name:           python-%{pypi_name}
 Version:        2.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        ASL 2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -124,5 +124,8 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Tue Feb 22 2022 Jose Castro Leon <jose.castro.leon@cern.ch> 2.1.0-2
+- Added gpg signature verification
+
 * Fri Apr 24 2020 RDO <dev@lists.rdoproject.org> 2.1.0-1
 - Update to 2.1.0
