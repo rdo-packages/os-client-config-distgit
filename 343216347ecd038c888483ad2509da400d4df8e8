@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2113f786_65d271e9",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2022-02-22T08:02:12Z",
+      "side": 1,
+      "message": "Maybe we should use the OS tarball URL here ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "343216347ecd038c888483ad2509da400d4df8e8",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5d0a3e6_f7c3a18f",
+        "filename": "python-os-client-config.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2022-02-22T08:02:12Z",
+      "side": 1,
+      "message": "should be pypi_name",
+      "range": {
+        "startLine": 30,
+        "startChar": 49,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "343216347ecd038c888483ad2509da400d4df8e8",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
