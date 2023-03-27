@@ -124,4 +124,3 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
-
