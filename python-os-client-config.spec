@@ -5,6 +5,12 @@
 %global with_doc 1
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+# we are excluding some BRs from automatic generator
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order
+# Exclude sphinx from BRs if docs are disabled
+%if ! 0%{?with_doc}
+%global excluded_brs %{excluded_brs} sphinx openstackdocstheme
+%endif
 
 %global common_desc \
 The os-client-config is a library for collecting client configuration for \
@@ -22,7 +28,7 @@ Name:           python-%{pypi_name}
 Version:        XXX
 Release:        XXX
 Summary:        OpenStack Client Configuration Library
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/openstack/%{pypi_name}
 Source0:        https://tarballs.openstack.org/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz
 # Required for tarball sources verification
@@ -45,21 +51,9 @@ BuildRequires:  /usr/bin/gpgv2
 
 %package -n python3-%{pypi_name}
 Summary:        %{summary}
-%{?python_provide:%python_provide python3-%{pypi_name}}
 
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-pbr
-# Testing requirements
-BuildRequires:  python3-fixtures
-BuildRequires:  python3-stestr
-BuildRequires:  python3-glanceclient >= 0.18.0
-BuildRequires:  python3-openstacksdk
-BuildRequires:  python3-oslotest >= 1.10.0
-BuildRequires:  python3-jsonschema >= 2.6.0
-
-Requires:       python3-openstacksdk >= 0.13.0
-
+BuildRequires:  pyproject-rpm-macros
 
 %description -n python3-%{pypi_name}
 %{common_desc}
@@ -68,10 +62,6 @@ Requires:       python3-openstacksdk >= 0.13.0
 %if 0%{?with_doc}
 %package  -n python-%{pypi_name}-doc
 Summary:        Documentation for OpenStack os-client-config library
-
-BuildRequires:  python3-sphinx
-BuildRequires:  python3-openstackdocstheme
-BuildRequires:  python3-reno
 
 %description -n python-%{pypi_name}-doc
 Documentation for the os-client-config library.
@@ -84,38 +74,49 @@ Documentation for the os-client-config library.
 %endif
 %autosetup -n %{pypi_name}-%{upstream_version} -S git
 
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+
+sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
+sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
+sed -i /^minversion.*/d tox.ini
+sed -i /^requires.*virtualenv.*/d tox.ini
+
+# Exclude some bad-known BRs
+for pkg in %{excluded_brs}; do
+  for reqfile in doc/requirements.txt test-requirements.txt; do
+    if [ -f $reqfile ]; then
+      sed -i /^${pkg}.*/d $reqfile
+    fi
+  done
+done
+
+# Automatic BR generation
+%generate_buildrequires
+%if 0%{?with_doc}
+  %pyproject_buildrequires -t -e %{default_toxenv},docs
+%else
+  %pyproject_buildrequires -t -e %{default_toxenv}
+%endif
 
 %build
-%{py3_build}
+%pyproject_wheel
 
 %if 0%{?with_doc}
 # generate html doc
-sphinx-build-3 -b html doc/source/ doc/build/html
+%tox -e docs
 rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 %endif
 
 %install
-%{py3_install}
+%pyproject_install
 
 %check
-# NOTE(jpena): we are disabling Python2 unit tests when building the Python 3 package.
-# The reason is that unit tests require glanceclient, and glanceclient is python3-only
-# when building with Python 3. We could revert that, but it is a rabbit hole we do not
-# want to enter
-export OS_TEST_PATH='./os_client_config/tests'
-export PATH=$PATH:$RPM_BUILD_ROOT/usr/bin
-export PYTHONPATH=$PWD
-
-#rm -rf .stestr
-#PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
+%tox -e %{default_toxenv}
 
 %files -n python3-%{pypi_name}
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %license LICENSE
 %{python3_sitelib}/os_client_config
-%{python3_sitelib}/*.egg-info
+%{python3_sitelib}/*.dist-info
 
 %if 0%{?with_doc}
 %files -n python-%{pypi_name}-doc
