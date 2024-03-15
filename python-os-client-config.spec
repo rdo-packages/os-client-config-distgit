@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x01527a34f0d0080f8a5db8d6eb6c5df21b4b6363
+%global sources_gpg_sign 0xbba3b1e67a7303dd1769d34595bf2e4d09004514
 %{!?_licensedir:%global license %%doc}
 %global pypi_name os-client-config
 %global with_doc 1
@@ -25,8 +25,8 @@ have to know extra info to use OpenStack \
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
 Name:           python-%{pypi_name}
-Version:        XXX
-Release:        XXX
+Version:        2.1.0
+Release:        3%{?dist}
 Summary:        OpenStack Client Configuration Library
 License:        Apache-2.0
 URL:            https://github.com/openstack/%{pypi_name}
@@ -125,4 +125,7 @@ rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 %endif
 
 %changelog
+* Fri Mar 15 2024 RDO <dev@lists.rdoproject.org> 2.1.0-3
+- Rebuild 2.1.0 in Caracal
+
 
