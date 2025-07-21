@@ -127,3 +127,4 @@ rm -rf doc/build/html/.{doctrees,buildinfo} doc/build/html/objects.inv
 
 %changelog
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/os-client-config/commit/d1e2fe7d2e07767f1a66ed0c057c20d7a95271f4
